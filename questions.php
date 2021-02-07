@@ -1,6 +1,6 @@
 <?php
 
-$bdd = new PDO('mysql:host=localhost;dbname=stackoverflow;charset=utf8', 'root', '',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+$bdd = new PDO('mysql:host=localhost:3308;dbname=stackoverflow1;charset=utf8', 'root', 'bambademe',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
 
 //Recupération des questions depuis la base de données
 $query = $bdd->query("SELECT * FROM questions");
@@ -71,7 +71,7 @@ function partOfText($text, $max)
 			</div>
 		<?php 
 		} ?>	
-		<div class="question-summary container">
+		<!-- <div class="question-summary container">
 			<div class="statscontainer">
 				<div class="stats">
 					<div class="answers">
@@ -91,6 +91,6 @@ function partOfText($text, $max)
 					<a class="post-tag">r</a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 </div>
 

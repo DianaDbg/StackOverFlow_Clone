@@ -1,6 +1,6 @@
 <?php
 
-	echo "$_POST['nomquestion']";
+	// echo "$_POST['nomquestion']";
 
 	
     if(isset($_POST['forminscription']))

@@ -2,7 +2,7 @@
 //Include Header
 require './header.php'; 
 
-$bdd = new PDO('mysql:host=localhost;dbname=stackoverflow;charset=utf8', 'root', '',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+$bdd = new PDO('mysql:host=localhost:3308;dbname=stackoverflow;charset=utf8', 'root', 'bambademe',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
 
 //Recupération des questions depuis la base de données
 $query = $bdd->query("SELECT * FROM questions WHERE numquestion = 1");
