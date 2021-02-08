@@ -1,22 +1,22 @@
 //Quill - Editor
 var quill = new Quill('#editor', {
-	modules: {
-	  toolbar: [
-	    ['bold', 'italic'],
-	    ['link', 'blockquote', 'code-block', 'image'],
-	    [{ list: 'ordered' }, { list: 'bullet' }]
-	  ]
-	},
-  	theme: 'snow'
+    modules: {
+        toolbar: [
+            ['bold', 'italic'],
+            ['link', 'blockquote', 'code-block', 'image'],
+            [{ list: 'ordered' }, { list: 'bullet' }]
+        ]
+    },
+    theme: 'snow'
 });
 
 var form = document.querySelector('.login-form');
 form.onsubmit = function() {
-  var postBody = document.querySelector('input[name=post-body]');
-  postBody.value = JSON.stringify(quill.getContents());
-  
-  console.log("Submitted", $(form).serialize(), $(form).serializeArray());
- 
+    var postBody = document.querySelector('input[name=post-body]');
+    postBody.value = JSON.stringify(quill.getContents());
+
+    console.log("Submitted", $(form).serialize(), $(form).serializeArray());
+
 };
 
 function quillGetHTML(inputDelta) {
@@ -27,6 +27,5 @@ function quillGetHTML(inputDelta) {
 
 
 $(".js-example-tags").select2({
-  tags: true
+    tags: true
 })
-

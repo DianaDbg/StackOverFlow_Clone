@@ -1,13 +1,24 @@
 <?php 
+session_start();
 //Include Header
 require './header.php'; 
 
-$bdd = new PDO('mysql:host=localhost:3308;dbname=stackoverflow;charset=utf8', 'root', 'bambademe',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
+$bdd = new PDO('mysql:host=localhost:3308;dbname=stackoverflow1;charset=utf8', 'root', 'bambademe',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
 
 //Recupération des questions depuis la base de données
-$query = $bdd->query("SELECT * FROM questions WHERE numquestion = 1");
-$Titre = $query->fetchAll();
+$id=$_GET['id'];
+$query = $bdd->query("SELECT * FROM questions WHERE id = $id ");
+$question = $query->fetch();
 
+// les tags de la question
+// Pour chaque on recupère les thémes qui lui concernent
+
+$reponses = $bdd->query("SELECT question,theme,themes.id,themes.nom FROM question_theme,themes WHERE question=$id AND theme=themes.id"); 
+;
+
+// echo '<pre>';
+// print_r($question);
+// echo '<pre>';
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +37,7 @@ $Titre = $query->fetchAll();
 		<div class="question container">
 			<div class="question-header">	
 				<div class="Title">	
-					<h3><?php foreach($Titre as $titre) { echo $titre['titre']; } ?></h3>
+					<h3><?php echo $question['titre'];  ?></h3>
 				</div>			
 				<div class="btn ask">	
 					<form>	
@@ -34,39 +45,41 @@ $Titre = $query->fetchAll();
 					</form>
 				</div>
 			</div>
-			<?php 
-			foreach($questions as $question) 
-			{ 
-			?>
-				<div class="question-summary container">
-					<div class="statscontainer">
-						<div class="stats">
-							<div class="answers">
+			
+			<div class="question-summary container mb-5">
+				<div class="statscontainer">
+					<div class="stats">
+						<div class="answers">
 
-										<strong>0 Answers</strong>
-										Answers
-							</div>
-						</div>
-					</div>
-					<div class="summary">
-						<h3><a href=""><?php echo $question['titre']; ?></a></h3>
-						<div class="excerpt"><?php partOfText($question['intitule'], $max) ?></div>
-						<div class="tags">
-							<a class="post-tag">java</a>
-							<a class="post-tag">python</a>
-							<a class="post-tag">css</a>
-							<a class="post-tag">html</a>
-							<a class="post-tag">graphql</a>
+									<strong>0 Answers</strong>
+									Answers
 						</div>
 					</div>
 				</div>
-			<?php 
-			} ?>	
-			<div class="question-summary container mb-5">
+				<div class="summary">
+					<h3><a href=""><?php echo $question['titre']; ?></a></h3>
+					<div class="excerpt">
+						<?php echo $question['intitule']; ?>
+					</div>
+					<div class="tags">
+						<?php
+						while($theme=$reponses->fetch()){?>
+							<a class="post-tag"><?php echo $theme['nom']; ?></a>
+						<?php
+						}
+						?>
+						<!-- <a class="post-tag">java</a>
+						<a class="post-tag">python</a>
+						<a class="post-tag">css</a>
+						<a class="post-tag">html</a>
+						<a class="post-tag">graphql</a> -->
+					</div>
+				</div>
+			</div>	
+			<!-- <div class="question-summary container mb-5">
 				<div class="">
 					<div class="excerpt">
-						<p>I have a list of locations and a dataframe like below and I want to select rows from a df with city and country columns where the location of the row (city and country) matches any of the pairs in
-						where the location of the row (city and country) matches any of the pairs inwhere the location of the row (city and country) matches any of the pairs inwhere the location of the row (city and country) matches any of the pairs inwhere the location of the row (city and country) matches any of the pairs in </p>	
+						<p> <?php echo $question['intitule']; ?> </p>	
 					</div>
 					<div class="tagsuser">
 						<div class="tags">
@@ -81,7 +94,7 @@ $Titre = $query->fetchAll();
 						</div>
 					</div>
 				</div>			
-			</div>
+			</div> -->
 			<h4>1 Réponses</h3>
 			<div class="answer pb-5">
 				<div class="validate">

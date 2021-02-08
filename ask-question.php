@@ -23,7 +23,7 @@ if(isset($_SESSION['id_apprenant'])){?>
 				<h2 class="mb-4 mt-4">Poser une question</h2>
 			</div>	
 			<!-- Create the editor container -->
-			<form class="login-form" action="" method="post">
+			<form class="login-form" action="save_question.php" method="post">
 				<h4>Titre</h4>
 				<div class="mb-3">
 					<label for="title-post" class="form-label">Soyez précis et imaginez que vous posez une question à une autre personne.</label>
@@ -32,7 +32,7 @@ if(isset($_SESSION['id_apprenant'])){?>
 				<h4>Corps</h4>
 				<label for="body-post" class="form-label">Incluez toutes les informations dont une personne aurait besoin pour répondre à votre question.</label>
 				<div class="mb-3">
-				<input type="hidden" name="post-body" class="form-control" id="body-post">
+					<input type="hidden" name="post-body" class="form-control" id="body-post">
 				</div>
 				<div id="editor">
 				</div>
@@ -40,7 +40,10 @@ if(isset($_SESSION['id_apprenant'])){?>
 				<div class="mb-3">
 					<label for="tag-post" class="form-label">Ajoutez jusqu'à 5 tags pour décrire le sujet de votre question.</label>
 					<!-- <input type="text" class="form-control" id="tag-post"> -->
-					<select class="js-example-tags form-control" multiple="multiple" id="tag-post">
+					<select class="js-example-tags form-control" multiple="multiple" id="tag-post" name="themes[]">
+						<option value="html">HTML</option>
+						<option value="css">CSS</option>
+						<option value="python">Python</option>
 					</select>
 				</div> 
 				<button type="submit" class="btn btn-post btn-info mb-5" name="formquestion">Posez votre question</button>

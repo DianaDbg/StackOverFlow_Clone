@@ -3,7 +3,7 @@
 $bdd = new PDO('mysql:host=localhost:3308;dbname=stackoverflow1;charset=utf8', 'root', 'bambademe',[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);
 
 //Recupération des questions depuis la base de données
-$query = $bdd->query("SELECT * FROM questions");
+$query = $bdd->query("SELECT questions.id AS id_question,titre,intitule,date_question,id_auteur,apprenants.id as id_apprenant,pseudo AS auteur FROM questions,apprenants WHERE id_auteur=apprenants.id");
 $questions = $query->fetchAll();
 
 //fonction qui permet de récupérer l'apprenant qui a poser la question
@@ -41,7 +41,12 @@ function partOfText($text, $max)
 
 		<?php 
 		foreach($questions as $question) 
-		{ 
+		{
+			// Pour chaque question on recupère les thémes qui lui concernent
+			$id_question = $question['id_question'];
+			$reponses = $bdd->query("SELECT question,theme,themes.id,themes.nom FROM question_theme,themes WHERE question=$id_question AND theme=themes.id"); 
+			// $themes = $reponses->fetchAll();
+			
 		?>
 			<div class="question-summary container">
 				<div class="statscontainer">
@@ -53,18 +58,24 @@ function partOfText($text, $max)
 					</div>
 				</div>
 				<div class="summary">
-					<h3><a href=""><?php echo $question['titre']; ?></a></h3>
+					<h3><a href="question.php?id=<?php echo $question['id_question']; ?>"><?php echo $question['titre']; ?></a></h3>
 					<div class="excerpt"><?php partOfText($question['intitule'], $max) ?></div>
 					<div class="tagsuser">
 						<div class="tags">
-							<a class="post-tag">java</a>
+						<?php
+						while($theme=$reponses->fetch()){?>
+							<a class="post-tag"><?php echo $theme['nom']; ?></a>
+						<?php
+						}
+						?>
+							<!-- <a class="post-tag">java</a>
 							<a class="post-tag">python</a>
 							<a class="post-tag">css</a>
 							<a class="post-tag">html</a>
-							<a class="post-tag">graphql</a>
+							<a class="post-tag">graphql</a> -->
 						</div>
 						<div class="user mx-3">
-							<img src="./assets/avatar.png" height="25" width="25">&nbsp;<a href="#">DianaDbg</a>
+							<img src="./assets/avatar.png" height="25" width="25">&nbsp;<a href="#"><?php echo $question['auteur']; ?></a>
 						</div>
 					</div>			
 				</div>
